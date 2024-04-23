@@ -18,11 +18,11 @@ void loop()
            value = Serial.read();
         }
      
-     // If the received value is 'O', it sets pin 8 (TTL4) to HIGH.
+     // If the received value is 'O', it sets pin 8 (TTL4) to HIGH (triggers laser).
      if (value == 'O')
         digitalWrite (TTL4, HIGH);
      
-     // If the received value is 'X', it sets pin 8 (TTL4) to LOW.
+     // If the received value is 'X', it sets pin 8 (TTL4) to LOW (does not trigger laser).
      else if (value == 'X')
         digitalWrite (TTL4, LOW);
    } 
