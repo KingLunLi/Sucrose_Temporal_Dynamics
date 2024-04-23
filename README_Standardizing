@@ -1,4 +1,4 @@
-This is a code to run in Python to standardize the extracted raw calcium transients from CaImAn (Giovannucci et al. 2019; https://doi.org/10.7554/eLife.38173). 
+The Standardizing_calcium_imaging.ipynb is a Python code to standardize the extracted raw calcium transients from CaImAn (Giovannucci et al. 2019; https://doi.org/10.7554/eLife.38173). 
 There are two standardization methods included: z-score and deltaF/F 
 The input is the 'Example_caiman_output_data.csv' which includes a time column and a column for each neuron and its activity. Note: this example file is approximately half the time instances of our actual data file. 
 Outputs include two .csv files: one containing the z-score and the other containing the delta F/F
