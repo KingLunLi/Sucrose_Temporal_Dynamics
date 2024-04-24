@@ -4,9 +4,9 @@ There are two codes within this folder that are intended to be used one after th
 
 Sample PCA code.ipynb
 The inputs: 
-- CSV containing standardized data
-- CSV containing lever press timing (behavior)
-- CSV containing inactive lever press timing
+- CSV containing standardized data - 'example_standardized.csv'
+- CSV containing lever press timing (behavior) - 'example_Lever_Press_Timing.csv'
+- CSV containing inactive lever press timing - 'example_Inactive_Lever_Press_Timing.csv'
 
 The outputs: 
 - After fitting, it extracts the PCA component from the pipeline and saves the explained variance ratios to a CSV file.
