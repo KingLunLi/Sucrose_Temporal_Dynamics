@@ -21,7 +21,7 @@ sampledir<-"D:/specify your directory/"
 clusterNum<-3
 
 ### currently, this code will run k-mean clustering on the immported data based on line 26 ("Kmean_middle_SUC")
-### you also may run different methods including "ABvalue","Simplemax","fire_-5s","fire_-2.5s","fire_0s" and "Kmean_middle_SUC"
+### you also may run different methods including "ABvalue","Simplemax","fire_-5s","fire_-2.5s","fire_0s" 
 ### these methods will sort the individual neurons by increasing, peak value, activity at -5s, -2.5s, 0s, respectively
 for (method in c("Kmean_middle_SUC")) {
   CD<-10
