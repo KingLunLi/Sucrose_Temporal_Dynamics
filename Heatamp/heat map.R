@@ -1,4 +1,4 @@
-#only need install once
+#only need to install once
 install.packages("stringr")
 install.packages("tidyr")
 install.packages("lattice")

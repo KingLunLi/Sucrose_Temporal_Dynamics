@@ -1,3 +1,5 @@
-This Heatmap.R is a R code used to visualize neural activity and more specifically the z-score data. 
-The input is an example .csv file containing the standardized data. 
-The output includes
+This Heatmap.R is a R code used to visualize neural activity and more specifically the z-score data around the timing of lever presses (behavior) and around baseline/random instances (no behavior/control). 
+You can run and visualize the data using different methods, which you can specify and change in line 26.
+The different methods include kmean clustering and sorting the data by increasing, peak value, activity at -5s, -2.5s, 0s.
+The inputs include an example .csv file containing the standardized data, the timing of lever presses, and the timing of inactive lever presses. 
+The output includes heatmap visualizations based on the specified method in line 26.
