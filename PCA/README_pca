@@ -3,6 +3,10 @@ There are two codes within this folder that are intended to be used one after th
 2. PCA_plot.R - reads PCA-transformed data, calculates, and visualizes the differences between active lever press (ALP) and baseline samples.
 
 1. Sample PCA code.ipynb
+This code was written in Python 3.0 and can be used on a Windows 10 or above. 
+
+Directory specification:
+Specify the directory in lines 2, 3, and 227 (e.g. C:/Users/JD/Desktop/sucrose-neuro-main/PCA/).
 The inputs: 
 - CSV containing standardized nerual data - 'example_standardized.csv'
 - CSV containing active lever press timing (behavioral data) - 'example_Lever_Press_Timing.csv'
@@ -10,9 +14,8 @@ The inputs:
 
 The outputs: 
 - It extracts the PCA component from the pipeline and saves the explained variance ratios to a CSV file.
-- The projected principal components (e.g. PC1, PC2) for each trial are saved to separate CSV files based on their group (ALP, BL1, or BL2) and the iteration (e.g. it0, it1). Each CSV file contains one projected principal component (e.g. PC1, PC2) across all trials (lever presses).
-
-The time needed to run the code (Sample PCA code.ipynb) depends on the data size.
+- The projected principal components (e.g. PC1, PC2) for each trial are saved to separate CSV files based on their group (ALP, BL1, or BL2) and the iteration (e.g. it0, it1). Each CSV file (e.g. example_variance_explained_1.csv) contains one projected principal component (e.g. PC1, PC2) across all trials (lever presses).
+This code takes about 5 mins to complete 5 iterations.  The actual time needed to run the code (Sample PCA code.ipynb) depends on the computer.
 
 2. PCA_plot.R
 There are multiple input files for this code. For the demo, we provided data from 2 example mice (e.g. example1, example2). There 60 files with 30 files (ALP, BL1, BL2, PC1, PC2, it0-6) from each mouse. Here is a breakdown of the files for one mouse:
