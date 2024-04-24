@@ -15,6 +15,11 @@ The outputs:
 The time needed to run the code (Sample PCA code.ipynb) depends on the data size.
 
 2. PCA_plot.R
-The inputs:
-- 
+There are multiple input files:
+- example_Day11trials_ALP_PC1_it0.csv - it0
+- example_Day11trials_ALP_PC2_it0.csv
+- example_Day11trials_BL1_PC1_it0.csv 
+- example_Day11trials_BL1_PC2_it0.csv
+- example_Day11trials_BL2_PC1_it0.csv 
+- example_Day11trials_BL2_PC2_it0.csv
 The outputs:
