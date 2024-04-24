@@ -7,9 +7,14 @@ Input:
 - Lever Press Timing from 1 example animal (within press_timing)
 
 The output of this code includes 3 plots from the first 2 dimensions of the manifold: 
-1. displays all the dots, which are the neural activities at each timepoint in the specified time window, and arrows that connect the dots from the beginning and end of the specified time window
+1. displays 3 different colors of dots: red, blue, light blue
+    blue dots are the beginning of the specified time window for each trial
+    red dots are the end of the specified time window for each trial
+    light blue are all the timepoints within the specified time window for all lever presses
+    arrows connect the dots from the beginning (blue) and end (red) of the specified time window
 2. displays only the arrows from plot 1
-3. displays an legend for plot 1 and 2 - the legend contains 4 arrows: 1 blue, 1 red, 2 black
-    the blue arrow represents the average angle of all the trajectories
-    the red arrow represents the opposite angle from the average
+3. displays a legend for plot 1 and 2 - the legend contains 4 arrows: 1 blue, 1 red, 2 black
+    the blue arrow represents the average angle or main direction of all the trajectories
+    the red arrow represents the opposite angle from the average angle
+    the black arrows are the range +/-75 deg of the average angle
 

@@ -346,7 +346,7 @@ colors <- c(rgb(173, 216, 230,maxColorValue = 255, 10),
 
 #  1st plot - plots with all points and arrows
 
-plot(temp$x2[temp$group==0],temp$y2[temp$group==0],pch = 19,col = rgb(173, 216, 230,maxColorValue = 255, 30) ,main="D1#14 Chosen",xlim=c(-0.08,0.1),ylim=c(-0.08,0.1))
+plot(temp$x2[temp$group==0],temp$y2[temp$group==0],pch = 19,col = rgb(173, 216, 230,maxColorValue = 255, 30) ,main="Example Arrow Plots",xlim=c(-0.08,0.1),ylim=c(-0.08,0.1))
 points(temp$x2[temp$group==1],temp$y2[temp$group==1],pch = 19,col = "blue")
 points(temp$x2[temp$group==2],temp$y2[temp$group==2],pch = 19,col = "red")
 Arrows(temp2$x1[temp2$samedirect==TRUE], temp2$y1[temp2$samedirect==TRUE], 
@@ -354,14 +354,14 @@ Arrows(temp2$x1[temp2$samedirect==TRUE], temp2$y1[temp2$samedirect==TRUE],
 Arrows(temp2$x1[temp2$samedirect==FALSE], temp2$y1[temp2$samedirect==FALSE], 
        x1 = temp2$x2[temp2$samedirect==FALSE], y1 = temp2$y2[temp2$samedirect==FALSE],arr.adj = 1,arr.type="curved",lty=1,col="red")
 #  2nd plot - plots with arrows 
-plot(temp$x2,temp$y2,pch = 19,col = rgb(173, 216, 230,maxColorValue = 255, 30) ,main="D1#14 Chosen",xlim=c(-0.08,0.1),ylim=c(-0.08,0.1))
+plot(temp$x2,temp$y2,pch = 19,col = rgb(173, 216, 230,maxColorValue = 255, 30) ,main="Example Arrow Plots",xlim=c(-0.08,0.1),ylim=c(-0.08,0.1))
 Arrows(temp2$x1[temp2$samedirect==TRUE], temp2$y1[temp2$samedirect==TRUE], 
        x1 = temp2$x2[temp2$samedirect==TRUE], y1 = temp2$y2[temp2$samedirect==TRUE],arr.adj = 1,arr.type="curved",lty=1,col="blue")
 Arrows(temp2$x1[temp2$samedirect==FALSE], temp2$y1[temp2$samedirect==FALSE], 
        x1 = temp2$x2[temp2$samedirect==FALSE], y1 = temp2$y2[temp2$samedirect==FALSE],arr.adj = 1,arr.type="curved",lty=1,col="red")
 
 #  3rd plot - plots directions
-plot(0,0,pch = 19,col = "white" ,main="D1#14 Chosen",xlim=c(-0.04,0.04),ylim=c(-0.04,0.04))
+plot(0,0,pch = 19,col = "white" ,main="Example Directions",xlim=c(-0.04,0.04),ylim=c(-0.04,0.04))
 
 Arrows(x0 = 0,y0 = 0,x1 = 0+cos(upperbound*pi/180)/80, y1 = 0+sin(upperbound*pi/180)/80, arr.type="curved",lwd=2)
 Arrows(x0 = 0,y0 = 0,x1 = 0+cos(lowerbound*pi/180)/80, y1 = 0+sin(lowerbound*pi/180)/80, arr.type="curved",lwd=2)
