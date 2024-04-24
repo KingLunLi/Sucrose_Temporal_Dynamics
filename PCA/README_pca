@@ -22,4 +22,4 @@ There are multiple input files for this code. For the demo, we provided data fro
 - example1_Day11trials_BL1_PC2_it0.csv
 - example1_Day11trials_BL2_PC1_it0.csv 
 - example1_Day11trials_BL2_PC2_it0.csv
-The outputs:
+The output of this code is a plot displaying the relative distance and sem over time. 
