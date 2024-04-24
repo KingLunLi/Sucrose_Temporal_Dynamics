@@ -8,20 +8,21 @@ library(stringr)
 library(tidyr)
 library(lattice)
 
-### mice name list
-wildlist<-c("152","153","174","175","177","180","181")
+### list of mice IDs
+wildlist<-c("example mouse")
 
 
 set.seed(123)
 
 ### set directory
-sampledir<-"D:/Xiguang/sample_data/"
+sampledir<-"D:/specify your directory/"
 
 #if k-mean applied set cluster Num
 clusterNum<-3
 
-### method included "ABvalue","Simplemax","fire_-5s","fire_-2.5s","fire_0s" and "Kmean_middle_SUC" for
-### sorting by increasing, peak value, activity at -5s, -2.5s, 0s and Kmean clustering
+### currently, this code will run kmean clustering on the immported data based on line 26 ("Kmean_middle_SUC")
+### you also may run different methods including "ABvalue","Simplemax","fire_-5s","fire_-2.5s","fire_0s" and "Kmean_middle_SUC" for
+### these methods will sort by increasing, peak value, activity at -5s, -2.5s, 0s, respectively
 for (method in c("Kmean_middle_SUC")) {
   CD<-10
   
