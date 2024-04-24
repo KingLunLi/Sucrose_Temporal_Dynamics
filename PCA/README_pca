@@ -15,7 +15,7 @@ The outputs:
 The time needed to run the code (Sample PCA code.ipynb) depends on the data size.
 
 2. PCA_plot.R
-There are multiple input files for this code. For the demo, we provided data from 2 example mice. There 60 files with 30 files from each mouse. Here is a breakdown of the files for each mouse:
+There are multiple input files for this code. For the demo, we provided data from 2 example mice (e.g. example1, example2). There 60 files with 30 files (ALP, BL1, BL2, PC1, PC2, it0-6) from each mouse. Here is a breakdown of the files for one mouse:
 - example1_Day11trials_ALP_PC1_it0.csv 
 - example1_Day11trials_ALP_PC2_it0.csv
 - example1_Day11trials_BL1_PC1_it0.csv 
