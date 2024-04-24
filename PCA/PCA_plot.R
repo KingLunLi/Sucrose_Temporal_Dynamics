@@ -122,7 +122,7 @@ for (days in c("Day11")) {
         scale_x_continuous(breaks=c(-100,-75,-50,-25,0,25,50,75,100,125,150,175,200))+
         geom_ribbon(aes(y = x.x, ymin = x.x - x.y, ymax = x.x + x.y, fill = factor(Group.2)), alpha = .2)+
         coord_cartesian(ylim = c(0, 1))+geom_vline(xintercept = c(-50,-25,0), linetype="dashed",  color = c("orange","green","black"), size=1.5)+
-        ggtitle(paste0(listname," ",days," Relative Distance"))+       
+        ggtitle(paste0("Example Relative Distance"))+       
         theme(panel.background = element_rect(fill='transparent'),
               plot.background = element_rect(fill='transparent', color=NA),
               panel.grid.major = element_blank(),
