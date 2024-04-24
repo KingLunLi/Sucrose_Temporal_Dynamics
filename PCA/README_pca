@@ -1,20 +1,20 @@
 There are two codes within this folder that are intended to be used one after the other:
-1. Sample PCA code.ipynb - performs a linear dimensionality reduction method called principal component analysis (PCA). 
-2. PCA_plot.R - reads PCA-transformed data, calculates and visualizes the differences between ALP and baseline samples, and aggregates results for further analysis
+1. Sample PCA code.ipynb - performs principal component analysis (PCA). 
+2. PCA_plot.R - reads PCA-transformed data, calculates, and visualizes the differences between active lever press (ALP) and baseline samples.
 
-Sample PCA code.ipynb
+1. Sample PCA code.ipynb
 The inputs: 
-- CSV containing standardized data - 'example_standardized.csv'
-- CSV containing lever press timing (behavior) - 'example_Lever_Press_Timing.csv'
+- CSV containing standardized nerual data - 'example_standardized.csv'
+- CSV containing active lever press timing (behavioral data) - 'example_Lever_Press_Timing.csv'
 - CSV containing inactive lever press timing - 'example_Inactive_Lever_Press_Timing.csv'
 
 The outputs: 
-- After fitting, it extracts the PCA component from the pipeline and saves the explained variance ratios to a CSV file.
-- The projected trials for each principal component are saved to separate CSV files based on their group (ALP, BL1, or BL2) and the iteration number. Each CSV file contains the projected data for a single principal component
+- It extracts the PCA component from the pipeline and saves the explained variance ratios to a CSV file.
+- The projected principal components (e.g. PC1, PC2) for each trial are saved to separate CSV files based on their group (ALP, BL1, or BL2) and the iteration (e.g. it0, it1). Each CSV file contains one projected principal component (e.g. PC1, PC2) across all trials (lever presses).
 
-Time to run this code depends on the amount of data you are trying to run PCA on
+The time needed to run the code (Sample PCA code.ipynb) depends on the data size.
 
-PCA_plot.R
+2. PCA_plot.R
 The inputs:
 - 
 The outputs:

@@ -15,9 +15,9 @@ options(warn=0)
 resulttotal<-data.frame()
 dimneed<-1:2
 direct<-"D:/specify your dir/"
-wildlist<-c("example mouse") # list of all mice IDs in this group but only one listed for demo
+wildlist<-c("example") # list of all mice IDs in this group but only one listed for demo (e.g. example_Day11Trials_ALP_PC1_it0.csv)
 
-# the following contains nested loops that iterate over the specified iterations (itr), days (days), and list names (listname)
+# the following contains nested loops that iterate over the specified iterations (itr), days (days), and group ('example' in this code)
 # within these loops, data is read from CSV files and processed to compute the squared differences between active lever press (ALP) and baseline (BL2) samples along the specified principal components. 
 # the results are accumulated in the resulttotal data frame.
 for (itr in 0:4){
@@ -103,7 +103,7 @@ for (itr in 0:4){
   
 }
 
-# the following lines calculate the mean of the squared differences and the standard error of the mean (SEM) based on the mean squared differences
+# the following lines calculate the mean euclidean distance and the standard error of the mean (SEM) based on the mean euclidean distances
 # then prints the plot, displaying the relative distance and SEM over time for the specified day and list name
 for (days in c("Day11")) {
   
