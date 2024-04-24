@@ -2,20 +2,21 @@
 install.packages("stringr")
 install.packages("tidyr")
 install.packages("lattice")
-
+install.packages("vctrs")
 ### import library
 library(stringr)
+library(vctrs)
 library(tidyr)
 library(lattice)
 
 ### list of mice IDs
-wildlist<-c("example mouse")
+wildlist<-c("example")
 
 
 set.seed(123)
 
 ### set directory
-sampledir<-"D:/specify your directory/"
+sampledir<-"specify your directory"
 
 #if k-mean applied set cluster Num
 clusterNum<-3
@@ -31,7 +32,6 @@ for (method in c("Kmean_middle_SUC")) {
       runlist<-wildlist
     }
     
-    for (days in c("Day11")) {
 ### "A" for ALP and "R1" "R2" for Random baselines
       for (RD in c("A","R1")) {
         t<-1
@@ -44,14 +44,14 @@ for (method in c("Kmean_middle_SUC")) {
           
           mice<-str_extract_all(name,"[0-9A-Z]+")[[1]][1]
           
-          data<-read.csv(file=paste0(sampledir,"z_score/",name,"_",days,"_standardized.csv"),check.names = FALSE)
+          data<-read.csv(file=paste0(sampledir,"z_score/",name,"_standardized.csv"),check.names = FALSE)
           
           
           data<-data[data$`Time(s)`!=0,]
           
           if(RD=="A"){
             la<-"ALP"
-            press<-read.csv(file = paste0(sampledir,"press_timing/",name,"_",days,"_Lever_Press_Timing.csv"),check.names = FALSE)
+            press<-read.csv(file = paste0(sampledir,"press_timing/",name,"_Lever_Press_Timing.csv"),check.names = FALSE)
             
             colnames(press)[1]<-"Time(s)"
             # remove lever press within 10s
@@ -87,7 +87,7 @@ for (method in c("Kmean_middle_SUC")) {
           if(RD=="I"){
             
             la<-"ILP"
-            press<-read.csv(file = paste0(sampledir,"press_timing/",name,"_",days,"_Inactive_Lever_Press_Timing.csv"),check.names = FALSE)
+            press<-read.csv(file = paste0(sampledir,"press_timing/",name,"_Inactive_Lever_Press_Timing.csv"),check.names = FALSE)
             
             colnames(press)[1]<-"Time(s)"
             x=1
@@ -121,12 +121,12 @@ for (method in c("Kmean_middle_SUC")) {
           }
           if(RD %in% c("R1","R2")) {
             la<-RD
-            press<-read.csv(file = paste0(sampledir,"press_timing/",name,"_",days,"_Lever_Press_Timing.csv"),check.names = FALSE)
+            press<-read.csv(file = paste0(sampledir,"press_timing/",name,"_Lever_Press_Timing.csv"),check.names = FALSE)
             colnames(press)[1]<-"Time(s)"
             a<-unlist(press$`Time(s)`)
             a<-a*10
             A<-length(a)
-            press<-read.csv(file = paste0(sampledir,"press_timing/",name,"_",days,"_Inactive_Lever_Press_Timing.csv"),check.names = FALSE)
+            press<-read.csv(file = paste0(sampledir,"press_timing/",name,"_Inactive_Lever_Press_Timing.csv"),check.names = FALSE)
             colnames(press)[1]<-"Time(s)"
             c<-unlist(press$`Time(s)`)
             c<-c*10
@@ -337,7 +337,7 @@ for (method in c("Kmean_middle_SUC")) {
         
         
       }
-    }
+    
   }
 }
 
