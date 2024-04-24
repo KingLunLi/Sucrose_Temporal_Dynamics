@@ -15,9 +15,9 @@ options(warn=0)
 resulttotal<-data.frame()
 dimneed<-1:2
 direct<-"D:/specify your dir/"
-wildlist<-c("example") # list of all mice IDs in this group but only one listed for demo (e.g. example_Day11Trials_ALP_PC1_it0.csv)
+wildlist<-c("example1", "example2") # list of all mice IDs in this group but only one listed for demo (e.g. example1_Day11Trials_ALP_PC1_it0.csv, example2_Day11Trials_ALP_PC1_it0.csv, )
 
-# the following contains nested loops that iterate over the specified iterations (itr), days (days), and group ('example' in this code)
+# the following contains nested loops that iterate over the specified iterations (itr), days (days), and group ("WT" in this code)
 # within these loops, data is read from CSV files and processed to compute the squared differences between active lever press (ALP) and baseline (BL2) samples along the specified principal components. 
 # the results are accumulated in the resulttotal data frame.
 for (itr in 0:4){
