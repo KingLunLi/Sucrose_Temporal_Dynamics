@@ -1,1 +1,15 @@
-This folder contains R code for generating arrow plots from the 
+This folder contains R code (arrow_plot.R) which generates arrow plots from the MIND data (PittData_20240213). The arrow plots can be used to examine the directionality of the populational neural dynamics. The MIND data was generated with an open source code from https://github.com/BrainCOGS/HPC_manifolds.git
+
+The code (arrow_plot.R) begins by extracting the MIND data. Then, the angles of each arrow are calculated, which are the trajectories of the neural data at each time point in the lower dimension. 
+
+Input: 
+- PittData_20240213 - 7-dimensional embedding from the MIND algorithm
+- Lever Press Timing from 1 example animal (within press_timing)
+
+The output of this code includes 3 plots from the first 2 dimensions of the manifold: 
+1. displays all the dots, which are the neural activities at each timepoint in the specified time window, and arrows that connect the dots from the beginning and end of the specified time window
+2. displays only the arrows from plot 1
+3. displays an legend for plot 1 and 2 - the legend contains 4 arrows: 1 blue, 1 red, 2 black
+    the blue arrow represents the average angle of all the trajectories
+    the red arrow represents the opposite angle from the average
+
