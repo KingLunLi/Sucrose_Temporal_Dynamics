@@ -15,11 +15,11 @@ The outputs:
 The time needed to run the code (Sample PCA code.ipynb) depends on the data size.
 
 2. PCA_plot.R
-There are multiple input files:
-- example_Day11trials_ALP_PC1_it0.csv - it0
-- example_Day11trials_ALP_PC2_it0.csv
-- example_Day11trials_BL1_PC1_it0.csv 
-- example_Day11trials_BL1_PC2_it0.csv
-- example_Day11trials_BL2_PC1_it0.csv 
-- example_Day11trials_BL2_PC2_it0.csv
+There are multiple input files for this code. For the demo, we provided data from 2 example mice. There 60 files with 30 files from each mouse. Here is a breakdown of the files for each mouse:
+- example1_Day11trials_ALP_PC1_it0.csv 
+- example1_Day11trials_ALP_PC2_it0.csv
+- example1_Day11trials_BL1_PC1_it0.csv 
+- example1_Day11trials_BL1_PC2_it0.csv
+- example1_Day11trials_BL2_PC1_it0.csv 
+- example1_Day11trials_BL2_PC2_it0.csv
 The outputs:
