@@ -1,6 +1,10 @@
 The Standardizing_calcium_imaging.ipynb is a Python code to standardize the extracted raw calcium transients from CaImAn (Giovannucci et al. 2019; https://doi.org/10.7554/eLife.38173; https://github.com/flatironinstitute/CaImAn). 
+This code requires Anaconda 3.0 to run. 
+
 There are two standardization methods included in the code: z-score and deltaF/F 
-The input for the Standardizing_calcium_imaging.ipynb is the 'Example_caiman_output_data.csv' which includes a time column and a column for each neuron and its activity. Note: this example file contains approximately 10 minutes of recordings.
+
+The input for the Standardizing_calcium_imaging.ipynb is the 'example_neural_data.csv' which includes a time column and a column for each neuron and its activity. Note: this example file contains approximately 10 minutes of recordings.
+
 Outputs from the Standardizing_calcium_imaging.ipynb code include two .csv files: one containing the z-score and the other containing the delta F/F data
 
 These outputs (.csv files containing the z-score and delta F/F data) act as the starting points or the inputs for the other analysis codes. 
