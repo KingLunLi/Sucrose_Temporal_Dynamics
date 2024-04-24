@@ -14,9 +14,12 @@ library(dplyr)
 options(warn=0)
 resulttotal<-data.frame()
 dimneed<-1:2
-direct<-"D:/Xiguang/sample_data/PCA_data/"
-wildlist<-c("152","153","174","175","177","180","181")
+direct<-"D:/specify your dir/"
+wildlist<-c("example mouse") # list of all mice IDs in this group but only one listed for demo
 
+# the following contains nested loops that iterate over the specified iterations (itr), days (days), and list names (listname)
+# within these loops, data is read from CSV files and processed to compute the squared differences between active lever press (ALP) and baseline (BL2) samples along the specified principal components. 
+# the results are accumulated in the resulttotal data frame.
 for (itr in 0:4){
   print(itr)
   
@@ -100,8 +103,8 @@ for (itr in 0:4){
   
 }
 
-
-
+# the following lines calculate the mean of the squared differences and the standard error of the mean (SEM) based on the mean squared differences
+# then prints the plot, displaying the relative distance and SEM over time for the specified day and list name
 for (days in c("Day11")) {
   
   for (listname in c("WT")) {
