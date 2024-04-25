@@ -1,0 +1,11 @@
+1. Install anaconda and create your environment(download link below): 
+	https://docs.anaconda.com/free/anaconda/install/index.html 
+
+2. Use spec-file.txt to install the conda packages (copy and paste the below line, not including quotes):
+	"conda list --explicit > spec-file.txt" 
+
+3. Steps 1/2 set up the conda environment to run the code under. It's possible to manually install each package if you don't want to use conda. The package versions should be included in the spec file or environment.yml.
+
+4. The source code zip should have also included a file called "data" with example files. Follow the file structure and naming convention.
+
+5. File "intra-day-bin-accuracy-decoder-parallelized.ipynb" contains the Jupyter notebook used to run the code. Once your environment is properly set up on the Jupyter notebook, running all should generate an example visual and some additional files containing mean/std of the sample run. 

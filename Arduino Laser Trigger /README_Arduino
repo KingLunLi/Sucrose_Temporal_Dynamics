@@ -1,1 +1,0 @@
-We used a custom Arduino code that acts as a relay between our prediction model and laser control box. We used the Uno R3 model that was connected to a laser pulse generator (Master 8).

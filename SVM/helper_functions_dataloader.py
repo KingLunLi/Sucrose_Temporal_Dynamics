@@ -18,9 +18,9 @@ from time_constants import *
 # In[ ]:
 
 
-def addMissingTimesAndInterpolateDF(df: pd.DataFrame, source: str) -> pd.DataFrame:
+def addMissingTimesAndMaybeInterpolateDF(df: pd.DataFrame, source: str, interpolated: bool = False) -> pd.DataFrame:
     '''
-    Returns a dataframe with missing times added in and interpolated. 
+    Returns a dataframe with missing times added in and (optionally) interpolated. 
     Prints out times that were added. \n
     DOES NOT MODIFY DataFrame IN PLACE. \n
     '''
@@ -34,7 +34,8 @@ def addMissingTimesAndInterpolateDF(df: pd.DataFrame, source: str) -> pd.DataFra
     print(f"[{source}] Added {len(unincludedTimes)} times: {sorted(unincludedTimes)}")
     df2 = df2.sort_index()
     df2.index.name = 'Time(s)'
-    # df2.interpolate(inplace=True) # leave out for MIND data
+    if interpolated:
+        df2.interpolate(inplace=True)
     return df2
 
 
@@ -58,27 +59,6 @@ def removeTimesOverlappingWithinMargin(lps: list, label="", margin=10) -> list:
     if len(to_remove_lps) > 0:
         print(f"[{label}] Removed {to_remove_lps}")
     return lps
-
-
-# In[ ]:
-
-
-def sortTimeWindowCells(df_source: pd.DataFrame, time: float) -> np.ndarray:
-    time_range = np.around(np.arange(int((time + TIME["LOWER"])*10), int((time + TIME["UPPER"])*10) + 1, 1)/10, decimals=1)[:TIME["TOTAL"]]
-    assert(time_range.shape[0] == TIME["TOTAL"])
-    group_range = np.arange(TIME["TOTAL"])
-    idx = pd.MultiIndex.from_tuples(list(zip(time_range, group_range)), names=('Time(s)', 'Group'))
-    df = df_source.loc[idx]
-    precol = sorted(sorted(list(zip(df.idxmax(), df.columns)), key=lambda y: df.loc[y[0]][y[1]], reverse=True), key=lambda x: x[0][1])
-    assert(df.shape[0] == TIME["TOTAL"])
-    return df[[x[1] for x in precol]].to_numpy()
-
-
-# In[ ]:
-
-
-def removeOutsideMaxTimeLPs(LP: list, minTime:int, maxTime: int) -> list:
-    return [i for i in LP if minTime <= i <= maxTime]
 
 
 # In[ ]:
@@ -133,13 +113,19 @@ def expandTimeWindow(df: pd.DataFrame, times: list, shuffle= False, time_grouped
 # In[ ]:
 
 
+def removeOutsideMaxTimeLPs(LP: list, minTime:int, maxTime: int) -> list:
+    return [i for i in LP if minTime <= i <= maxTime]
+
+
+# In[ ]:
+
+
 class DataLoader:
     def __init__(self, dir: str, animal_num: str, day_num: str, create_baseline_2: bool = False, 
                  use_manifold_transformed: bool = False, use_cut: bool = False, 
-                 lp_width: int = None, select_overlap: int = None):
-        self.LPWidth = lp_width
-        self.selectOverlap = select_overlap 
-
+                 bl_sampling_lp_width: int = 5, bl_sampling_select_overlap: float = 2.5, bl_sampling_max_attempts: int = 25,
+                 interpolated: bool = False, lp_time_overlap_margin: int = 10):
+        
         # Create file prefix
         self.file_prefix = animal_num + '_' + day_num
         self.baseline2 = create_baseline_2
@@ -182,7 +168,7 @@ class DataLoader:
             self.times_BL2 = np.empty((0))
             warnings.warn("No times exist in times file for " + standardized_path)
             return
-        self.df_times = addMissingTimesAndInterpolateDF(df_times.dropna(), self.file_prefix)
+        self.df_times = addMissingTimesAndMaybeInterpolateDF(df_times.dropna(), self.file_prefix, interpolated)
 
         # Read ALP Timing
         alp_timing_path = os.path.join(dir, self.file_prefix + '_Lever_Press_Timing.csv')
@@ -192,7 +178,7 @@ class DataLoader:
                 df_ALP.rename(columns={'Lever_Press_Timing(s)':'Time(s)'}, inplace=True)
             self.__times_ALP = removeOutsideMaxTimeLPs(df_ALP['Time(s)'].tolist(), -TIME["LOWER"], max(df_times.index) - TIME["UPPER"]) # Keep original as backup
             times_ALP = [x for x in self.__times_ALP]
-            times_ALP = removeTimesOverlappingWithinMargin(self.__times_ALP, self.file_prefix + "_ALP")
+            times_ALP = removeTimesOverlappingWithinMargin(self.__times_ALP, self.file_prefix + "_ALP", lp_time_overlap_margin)
             self.times_ALP = np.array(removeOutsideMaxTimeLPs(times_ALP, -TIME["LOWER"], max(df_times.index) - TIME["UPPER"]))
             if len(self.times_ALP) == 0:
                 warnings.warn("No ALP times provided for " + alp_timing_path)
@@ -215,30 +201,26 @@ class DataLoader:
             if 'Lever_Press_Timing(s)' in df_ILP.columns:
                 df_ILP.rename(columns={'Lever_Press_Timing(s)':'Time(s)'}, inplace=True)
             self.__times_ILP = removeOutsideMaxTimeLPs(df_ILP['Time(s)'].tolist(), -TIME["LOWER"], df_times.index[-1] - TIME["UPPER"]) # Keep original as backup
-            times_ILP = removeTimesOverlappingWithinMargin(self.__times_ILP, self.file_prefix + "_ILP")
+            times_ILP = removeTimesOverlappingWithinMargin(self.__times_ILP, self.file_prefix + "_ILP", lp_time_overlap_margin)
             self.times_ILP = removeOutsideMaxTimeLPs(times_ILP, -TIME["LOWER"], df_times.index[-1] - TIME["UPPER"])
         else:
             self.__times_ILP = np.empty((0))
             self.times_ILP = np.empty((0))
 
         # Create BL
-        self.sampleBaseline()
+        self.sampleBaseline(bl_sampling_select_overlap, bl_sampling_max_attempts, bl_sampling_lp_width)
 
-    def __genNonLPTimes(self, LPWidth=5) -> list:
-        if self.LPWidth is not None:
-            LPWidth = self.LPWidth
-        # Generate list of times that can be selected from
-        createInterval = lambda y: np.arange(int((y - LPWidth)*10), int((y + LPWidth)*10) + 1, 1)/10
-        ALP_intervals = np.round([createInterval(y)[0:20*LPWidth+1] for y in self.__times_ALP], decimals=1).flatten()
-        ILP_intervals = np.round([createInterval(y)[0:20*LPWidth+1] for y in self.__times_ILP], decimals=1).flatten()
+    def __getNonLPTimes(self, bl_sampling_lp_width: int) -> list:
+        # geterate list of times that can be selected from
+        createInterval = lambda y: np.arange(int((y - bl_sampling_lp_width)*10), int((y + bl_sampling_lp_width)*10) + 1, 1)/10
+        ALP_intervals = np.round([createInterval(y)[0:20*bl_sampling_lp_width+1] for y in self.__times_ALP], decimals=1).flatten()
+        ILP_intervals = np.round([createInterval(y)[0:20*bl_sampling_lp_width+1] for y in self.__times_ILP], decimals=1).flatten()
         LP_intervals = set(np.append(ALP_intervals, ILP_intervals))
         all_times = set(list(self.df_times.index.values))
         return self.df_times.loc[list(all_times.difference(LP_intervals))]
 
-    def __sampleBaseline(self, selectOverlap=2.5) -> list:
-        if self.selectOverlap is not None:
-            selectOverlap = self.selectOverlap
-        non_LP = self.__genNonLPTimes()
+    def __sampleBaselineImpl(self, bl_sampling_select_overlap: float, bl_sampling_max_attempts: int, bl_sampling_lp_width: int) -> list:
+        non_LP = self.__getNonLPTimes(bl_sampling_lp_width)
 
         # Randomly select len(ALP) times (or less if there isn't)
         num_select = len(self.times_ALP)
@@ -250,16 +232,15 @@ class DataLoader:
         times_BL = []
         max_len_times = []
 
-        max_attempts = 25
-        while len(times_BL) != num_select and max_attempts > 0:
-            max_attempts -= 1
+        while len(times_BL) != num_select and bl_sampling_max_attempts > 0:
+            bl_sampling_max_attempts -= 1
             times_BL = []
             for _ in range(num_select):
                 if len(to_st_filtered) == 0: 
                     # The points selected don't space out well
                     break
                 time = np.random.choice(to_st_filtered, 1)[0]
-                to_st_filtered = [t for t in to_st_filtered if not(t - selectOverlap <= time <= t + selectOverlap)]
+                to_st_filtered = [t for t in to_st_filtered if not(t - bl_sampling_select_overlap <= time <= t + bl_sampling_select_overlap)]
                 times_BL.append(time)
             # Check for larger time selection and keep the bigger one, reset to pick again
             if len(times_BL) > len(max_len_times):
@@ -274,46 +255,8 @@ class DataLoader:
         times_BL.sort()
         return times_BL
 
-    def genPCAPipeline(self, LP1, LP2, num_pcs_return, shuffle1=False, shuffle2=False):
-        df_LP1_windows = expandTimeWindow(self.df_times, LP1, shuffle=shuffle1)
-        df_LP1_grouped_windows = df_LP1_windows.groupby(df_LP1_windows.index.get_level_values('Group'))
-        
-        df_LP2_windows = expandTimeWindow(self.df_times, LP2, shuffle=shuffle2)
-        df_LP2_grouped_window = df_LP2_windows.groupby(df_LP2_windows.index.get_level_values('Group'))
-        
-        df_LP1_LP2_means = pd.concat((df_LP1_grouped_windows.mean(), df_LP2_grouped_window.mean()))
-        df_LP1_LP2_means = pd.concat((df_LP1_windows, df_LP2_windows))
-        pipe = Pipeline([('scaler', StandardScaler()),('pca', PCA(n_components=num_pcs_return))])
-        pipe.fit(df_LP1_LP2_means)
-        self.pipe = pipe
-        self.test_LP1 = pipe.transform(df_LP1_windows)
-        self.test_LP2 = pipe.transform(df_LP2_windows)
-        return pipe
-    
-    def genSampledTimeWindowPCAArrays(self, num_pcs_return: int, 
-                                      train_split: int, test_split: int,
-                                      shuffle1= False, shuffle2= False):
-        LP1 = self.times_ALP
-        LP2 = np.array(self.times_BL)
-        # LP2 = self.times_ALP
-        if self.empty or len(LP1) == 0 or len(LP2) == 0:
-            return np.array([]), np.array([])
-        
-        train_LP1 = LP1[train_split]
-        train_LP2 = LP2[train_split]
-        test_LP1 = LP2[test_split]
-        test_LP2 = LP1[test_split]
-
-        pipe = self.genPCAPipeline(train_LP1, train_LP2, num_pcs_return)
-        df_LP1_window = expandTimeWindow(self.df_times, test_LP1, shuffle=shuffle1)
-        df_LP2_window = expandTimeWindow(self.df_times, test_LP2, shuffle=shuffle2)
-        LP1_transformed = pipe.transform(df_LP1_window)
-        LP2_transformed = pipe.transform(df_LP2_window)
-        return self.test_LP1, self.test_LP2, LP1_transformed, LP2_transformed
-
-    def sampleBaseline(self):
-        # Create BL
-        self.times_BL = self.__sampleBaseline()
+    def sampleBaseline(self, bl_sampling_select_overlap: float, bl_sampling_max_attempts: int, bl_sampling_lp_width: int):
+        self.times_BL = self.__sampleBaselineImpl(bl_sampling_select_overlap, bl_sampling_max_attempts, bl_sampling_lp_width)
         if self.baseline2:
             np.random.shuffle(self.times_BL)
             self.times_BL2 = np.sort(self.times_BL[len(self.times_BL)//2:])
