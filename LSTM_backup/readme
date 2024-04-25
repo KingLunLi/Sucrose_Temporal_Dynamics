@@ -1,1 +1,18 @@
+This folder contains codes and datafiles used to train a behavior prediction model and an optogenetic manipulation. In our lab, we used DeepLabCut  (https://github.com/DeepLabCut/DeepLabCut.git) to extract the digital coordinates of individual mouse body parts. These coordinates were used in a long short term memory model (LSTM) to predict a behavior. A positive behavior prediction sent an output to a custom written Arduino code (see Arduino Laser Trigger folder) to the laser generator.
 
+There are 3 folders with different types of data: 
+1. coordinate - contains the DLC coordinates from 5 example sessions obtained from DLC  
+2. timing - contains the lever press timing for 5 example sessions
+
+There are 3 different codes within this folder: 
+1. LSTM_Data_prepare.R - this is an R code that combines lever press timing and the coordinates to construct a train/test set
+	Inputs: coordinate and lever press timing
+	Outputs: train/test set data in .csv file 
+    - this file has the combined train/test sets from the coordinate files
+    - it contains 20 coordinates (x,y) based on 10 labelled body parts 
+2. LSTM_Model DLC.ipynb - this is a Python code for the prediction
+	Inputs: train/test set data in .csv file which is generated code 1 (LSTM_Data_prepare.R)
+	Outputs: model and predictions for the testing set 
+3. teensy_laser.py - this is a Python code that has two outputs:
+ - the live coordinates from the DLC  
+ - the positive predictions based on the coordinates, which are sent to the Arduino and trigger the laser 
