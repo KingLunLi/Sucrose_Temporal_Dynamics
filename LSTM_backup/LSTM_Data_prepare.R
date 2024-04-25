@@ -1,7 +1,7 @@
 
 
-sampledir<-"D:/Xiguang/sample_data/DLC_data/"
-outputdir<-"D:/Xiguang/sample_data/DLC_data/"
+sampledir<-"specify your directory/"
+outputdir<-"specify your directory/"
 ######### define positive time range
 timerange1 =  c(-6,-5)
 timerange2 =  c(-4,-3)
@@ -10,13 +10,13 @@ for( bound in list(timerange1,timerange2)){
   
   Allresult<-data.frame()
   Allresulttest<-data.frame()
-  for (days in c("541_SUC","542_SUC","543_SUC","544_SUC","545_SUC")
+  for (days in c("sample1", "sample2", "sample3", "sample4", "sample5" )
   ) {
     interval<-32
     print(paste0("Now proceed to time range ",bound[1],"s to ",bound[2],"s for data ",days))
     for (group in c("Ctrl")) {
       if(group=="Ctrl"){
-        mlist<-c("Opto2")
+        mlist<-c("Mice")
       }
       for (name in mlist) {
         result<-data.frame()
