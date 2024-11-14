@@ -3,4 +3,4 @@ sucrose-neuro contains all the custom and adapted codes used to visualize and an
 The codes were used in Python, R, or Arduino.
 
 Testing
-![test_image](https://myoctocat.com/assets/images/base-octocat.svg)
+![test_image](/images/Miniscope%201.png)
