@@ -3,9 +3,11 @@ sucrose-neuro contains all the custom and adapted codes used to visualize and an
 The codes were used in Python, R, or Arduino.
 
 Test image
+
 ![Test image](/images/Miniscope%201.png)
 
 Sample *in-vivo* calcium imaging recording
+
 ![Test image](/images/Ca2+Imaging.gif)
 
 Extracted Data
