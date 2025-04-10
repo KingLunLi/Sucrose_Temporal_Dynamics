@@ -6,16 +6,37 @@ Test image
 
 ![Test image](/images/Miniscope%201.png)
 
-Sample *in-vivo* calcium imaging recording
+Sample *in-vivo* calcium imaging recording (Press **Play** to view the recording)
 
-![Test image](/images/Ca2+Imaging.gif)
+<img src="/images/Ca2+Imaging.gif" width="25%" height="25%">
 
 Extracted Data
-Sample Traces
+<img src="/images/Extracted Traces.png" width="25%" height="25%">
 
 Analyses
-Across days analysis
+Sorted data
+<img src="/images/Sorted data.png" width="25%" height="25%">
+
 PCA
+<img src="/images/PCA.png" width="25%" height="25%">
+
 SVM
+<img src="/images/Accuracy.png" width="25%" height="25%">
+
 Hierarchical cluster analysis
-Classifier
+<img src="/images/Trajectory.png" width="25%" height="25%">
+
+DLC labeling
+<img src="/images/DLC labeling.png" width="25%" height="25%">
+
+DLC Prediction
+<img src="/images/DLC Prediction Accuracy.png" width="25%" height="25%">
+
+Optogenetics
+<img src="/images/Opto.png" width="25%" height="25%">
+
+Optogenetics training
+<img src="/images/Opto training results.png" width="25%" height="25%">
+
+
+
